@@ -1,0 +1,14 @@
+name: CI Check
+
+on:
+  push:
+
+jobs:
+  check-page:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Confirm index.html exists
+        run: test -f index.html
