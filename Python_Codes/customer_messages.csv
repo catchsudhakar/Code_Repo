@@ -1,0 +1,251 @@
+message,label,time_period
+error message login,existing_issue,pre_drift
+how to apply account,new_inquiry,pre_drift
+error message login,existing_issue,pre_drift
+payment not showing,existing_issue,pre_drift
+how do i register,new_inquiry,pre_drift
+mobile app create account,new_inquiry,post_drift
+tablet signup issue,new_inquiry,post_drift
+download banking app,new_inquiry,post_drift
+new signup problem,new_inquiry,pre_drift
+new signup problem,new_inquiry,pre_drift
+connection timeout app,existing_issue,post_drift
+session timeout error,existing_issue,post_drift
+app keeps crashing,existing_issue,post_drift
+two factor problem,existing_issue,post_drift
+new account requirements,new_inquiry,pre_drift
+offline mode error,existing_issue,post_drift
+app not working signup,new_inquiry,post_drift
+registration help needed,new_inquiry,pre_drift
+mobile signup issue,new_inquiry,post_drift
+payment not showing,existing_issue,pre_drift
+version bug login,existing_issue,post_drift
+new account requirements,new_inquiry,pre_drift
+how to join,new_inquiry,pre_drift
+transaction error,existing_issue,pre_drift
+ios signup problem,new_inquiry,post_drift
+signup process question,new_inquiry,pre_drift
+login problem,existing_issue,pre_drift
+transfer failed,existing_issue,pre_drift
+account locked help,existing_issue,pre_drift
+new signup problem,new_inquiry,pre_drift
+biometric login failed,existing_issue,post_drift
+payment declined,existing_issue,pre_drift
+how do i register,new_inquiry,pre_drift
+cache clear help,existing_issue,post_drift
+account locked help,existing_issue,pre_drift
+how to open account,new_inquiry,pre_drift
+how to start account,new_inquiry,pre_drift
+new app user,new_inquiry,post_drift
+app download help,new_inquiry,post_drift
+mobile app create account,new_inquiry,post_drift
+want to become customer,new_inquiry,pre_drift
+want open savings account,new_inquiry,pre_drift
+how to sign up online,new_inquiry,pre_drift
+ios signup problem,new_inquiry,post_drift
+face id not working,existing_issue,post_drift
+want to sign up,new_inquiry,pre_drift
+want to sign up,new_inquiry,pre_drift
+how create username,new_inquiry,pre_drift
+mobile banking signup,new_inquiry,post_drift
+want open savings account,new_inquiry,pre_drift
+money missing,existing_issue,pre_drift
+ssl error app,existing_issue,post_drift
+biometric login failed,existing_issue,post_drift
+money missing,existing_issue,pre_drift
+account locked help,existing_issue,pre_drift
+payment declined,existing_issue,pre_drift
+fingerprint error,existing_issue,post_drift
+app account setup,new_inquiry,post_drift
+mobile banking signup,new_inquiry,post_drift
+data not loading,existing_issue,post_drift
+2fa not receiving,existing_issue,post_drift
+tablet signup issue,new_inquiry,post_drift
+new account requirements,new_inquiry,pre_drift
+how to apply account,new_inquiry,pre_drift
+password not working,existing_issue,pre_drift
+how download app,new_inquiry,post_drift
+push notification issue,existing_issue,post_drift
+want open savings account,new_inquiry,pre_drift
+tablet signup issue,new_inquiry,post_drift
+version bug login,existing_issue,post_drift
+transaction failed,existing_issue,pre_drift
+how download app,new_inquiry,post_drift
+first time banking help,new_inquiry,pre_drift
+how to start account,new_inquiry,pre_drift
+connection timeout app,existing_issue,post_drift
+transaction error,existing_issue,pre_drift
+want open savings account,new_inquiry,pre_drift
+system down help,existing_issue,pre_drift
+new account requirements,new_inquiry,pre_drift
+error message login,existing_issue,pre_drift
+new customer onboarding,new_inquiry,pre_drift
+transaction failed,existing_issue,pre_drift
+how download app,new_inquiry,post_drift
+data not loading,existing_issue,post_drift
+how download app,new_inquiry,post_drift
+new account setup,new_inquiry,pre_drift
+new customer help,new_inquiry,pre_drift
+how to start account,new_inquiry,pre_drift
+version bug login,existing_issue,post_drift
+new customer onboarding,new_inquiry,pre_drift
+how to join,new_inquiry,pre_drift
+cannot access account,existing_issue,pre_drift
+statement wrong,existing_issue,pre_drift
+registration help needed,new_inquiry,pre_drift
+create new account please,new_inquiry,pre_drift
+app froze payment,existing_issue,post_drift
+error message login,existing_issue,pre_drift
+new customer onboarding,new_inquiry,pre_drift
+two factor problem,existing_issue,post_drift
+want to become customer,new_inquiry,pre_drift
+new account setup,new_inquiry,pre_drift
+how create username,new_inquiry,pre_drift
+card not working,existing_issue,pre_drift
+app installation help,new_inquiry,post_drift
+how to start account,new_inquiry,pre_drift
+registration help needed,new_inquiry,pre_drift
+how to sign up online,new_inquiry,pre_drift
+how download app,new_inquiry,post_drift
+new account requirements,new_inquiry,pre_drift
+new signup problem,new_inquiry,pre_drift
+error message login,existing_issue,pre_drift
+cache clear help,existing_issue,post_drift
+app download help,new_inquiry,post_drift
+ssl error app,existing_issue,post_drift
+app crashing,existing_issue,pre_drift
+bill payment issue,existing_issue,pre_drift
+first time user help,new_inquiry,pre_drift
+want open savings account,new_inquiry,pre_drift
+how do i register,new_inquiry,pre_drift
+bill payment issue,existing_issue,pre_drift
+app crashing,existing_issue,pre_drift
+app installation help,new_inquiry,post_drift
+ssl error app,existing_issue,post_drift
+new signup problem,new_inquiry,pre_drift
+how to start account,new_inquiry,pre_drift
+mobile signup issue,new_inquiry,post_drift
+tablet signup issue,new_inquiry,post_drift
+login problem,existing_issue,pre_drift
+transaction failed,existing_issue,pre_drift
+cannot access account,existing_issue,pre_drift
+tablet signup issue,new_inquiry,post_drift
+want to sign up,new_inquiry,pre_drift
+error message login,existing_issue,pre_drift
+session timeout error,existing_issue,post_drift
+app store download,new_inquiry,post_drift
+bill payment issue,existing_issue,pre_drift
+app store download,new_inquiry,post_drift
+how do i register,new_inquiry,pre_drift
+error message login,existing_issue,pre_drift
+registration help needed,new_inquiry,pre_drift
+login problem,existing_issue,pre_drift
+app account setup,new_inquiry,post_drift
+balance wrong,existing_issue,pre_drift
+want open savings account,new_inquiry,pre_drift
+transaction failed,existing_issue,pre_drift
+transaction failed,existing_issue,pre_drift
+cache clear help,existing_issue,post_drift
+offline mode error,existing_issue,post_drift
+cannot log in,existing_issue,pre_drift
+smartphone register,new_inquiry,post_drift
+bill payment issue,existing_issue,pre_drift
+new customer onboarding,new_inquiry,pre_drift
+smartphone register,new_inquiry,post_drift
+account locked help,existing_issue,pre_drift
+registration help needed,new_inquiry,pre_drift
+app account setup,new_inquiry,post_drift
+account locked help,existing_issue,pre_drift
+app keeps crashing,existing_issue,post_drift
+new app user,new_inquiry,post_drift
+payment not showing,existing_issue,pre_drift
+how to sign up online,new_inquiry,pre_drift
+app update broken,existing_issue,post_drift
+how do i register,new_inquiry,pre_drift
+payment declined,existing_issue,pre_drift
+cant install app,new_inquiry,post_drift
+app account setup,new_inquiry,post_drift
+new customer help,new_inquiry,pre_drift
+money missing,existing_issue,pre_drift
+android app help,new_inquiry,post_drift
+signup process question,new_inquiry,pre_drift
+transaction failed,existing_issue,pre_drift
+password not working,existing_issue,pre_drift
+cannot access account,existing_issue,pre_drift
+sync failed app,existing_issue,post_drift
+app download help,new_inquiry,post_drift
+push notification issue,existing_issue,post_drift
+account locked help,existing_issue,pre_drift
+how download app,new_inquiry,post_drift
+account locked help,existing_issue,pre_drift
+new account setup,new_inquiry,pre_drift
+otp not arriving,existing_issue,post_drift
+transfer failed,existing_issue,pre_drift
+app not working signup,new_inquiry,post_drift
+want to become customer,new_inquiry,pre_drift
+cannot log in,existing_issue,pre_drift
+system down help,existing_issue,pre_drift
+two factor problem,existing_issue,post_drift
+otp not arriving,existing_issue,post_drift
+payment declined,existing_issue,pre_drift
+registration help needed,new_inquiry,pre_drift
+new customer help,new_inquiry,pre_drift
+transaction failed,existing_issue,pre_drift
+push notification issue,existing_issue,post_drift
+how to apply account,new_inquiry,pre_drift
+error message login,existing_issue,pre_drift
+app download help,new_inquiry,post_drift
+how to join,new_inquiry,pre_drift
+offline mode error,existing_issue,post_drift
+transfer stuck,existing_issue,pre_drift
+api error mobile,existing_issue,post_drift
+api error mobile,existing_issue,post_drift
+payment not showing,existing_issue,pre_drift
+transaction error,existing_issue,pre_drift
+account locked help,existing_issue,pre_drift
+bill payment issue,existing_issue,pre_drift
+ssl error app,existing_issue,post_drift
+app onboarding help,new_inquiry,post_drift
+connection timeout app,existing_issue,post_drift
+download banking app,new_inquiry,post_drift
+face id not working,existing_issue,post_drift
+app froze payment,existing_issue,post_drift
+connection timeout app,existing_issue,post_drift
+ios signup problem,new_inquiry,post_drift
+login problem,existing_issue,pre_drift
+cannot access account,existing_issue,pre_drift
+app crashing,existing_issue,pre_drift
+card not working,existing_issue,pre_drift
+cannot log in,existing_issue,pre_drift
+data not loading,existing_issue,post_drift
+app registration problem,new_inquiry,post_drift
+app keeps crashing,existing_issue,post_drift
+mobile banking signup,new_inquiry,post_drift
+phone app registration,new_inquiry,post_drift
+first time user help,new_inquiry,pre_drift
+first time banking help,new_inquiry,pre_drift
+new user app help,new_inquiry,post_drift
+app keeps crashing,existing_issue,post_drift
+first time banking help,new_inquiry,pre_drift
+how do i register,new_inquiry,pre_drift
+transfer stuck,existing_issue,pre_drift
+login problem,existing_issue,pre_drift
+cant install app,new_inquiry,post_drift
+want to sign up,new_inquiry,pre_drift
+payment not showing,existing_issue,pre_drift
+app crashing,existing_issue,pre_drift
+want open savings account,new_inquiry,pre_drift
+biometric login failed,existing_issue,post_drift
+signup process question,new_inquiry,pre_drift
+version bug login,existing_issue,post_drift
+push notification issue,existing_issue,post_drift
+want to sign up,new_inquiry,pre_drift
+data not loading,existing_issue,post_drift
+new signup problem,new_inquiry,pre_drift
+phone app registration,new_inquiry,post_drift
+system down help,existing_issue,pre_drift
+app crashing,existing_issue,pre_drift
+want open savings account,new_inquiry,pre_drift
+balance wrong,existing_issue,pre_drift
+app not working signup,new_inquiry,post_drift
+error message login,existing_issue,pre_drift
