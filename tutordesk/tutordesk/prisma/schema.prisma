@@ -1,0 +1,142 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum RegistrationStatus {
+  PENDING
+  CHANGES_REQUESTED
+  APPROVED
+  REJECTED
+}
+
+enum ReviewAction {
+  REQUESTED_CHANGES
+  APPROVED
+  REJECTED
+}
+
+enum StudentStatus {
+  ACTIVE
+  INACTIVE
+  WITHDRAWN
+}
+
+model Business {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  countryCode String
+  currency    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  parents       Parent[]
+  students      Student[]
+  registrations Registration[]
+}
+
+model Parent {
+  id           String   @id @default(cuid())
+  businessId   String
+  firstName    String
+  lastName     String
+  relationship String
+  email        String
+  phone        String
+  address      String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  business      Business       @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  students      Student[]
+  registrations Registration[]
+
+  @@unique([businessId, email])
+  @@index([businessId])
+  @@index([lastName, firstName])
+}
+
+model Student {
+  id            String        @id @default(cuid())
+  businessId    String
+  parentId      String
+  firstName     String
+  lastName      String
+  dateOfBirth   DateTime      @db.Date
+  yearLevel     Int
+  school        String?
+  learningNeeds String?
+  status        StudentStatus @default(ACTIVE)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  business     Business      @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  parent       Parent        @relation(fields: [parentId], references: [id])
+  registration Registration?
+
+  @@index([businessId])
+  @@index([parentId])
+  @@index([lastName, firstName])
+}
+
+model Registration {
+  id         String  @id @default(cuid())
+  reference  String  @unique
+  businessId String
+  parentId   String?
+  studentId  String? @unique
+
+  studentFirstName String
+  studentLastName  String
+  dateOfBirth      DateTime @db.Date
+  yearLevel        Int
+  school           String?
+  learningNeeds    String?
+
+  parentFirstName       String
+  parentLastName        String
+  relationship          String
+  email                 String
+  phone                 String
+  address               String?
+  emergencyContactName  String?
+  emergencyContactPhone String?
+
+  status      RegistrationStatus @default(PENDING)
+  submittedAt DateTime           @default(now())
+  reviewedAt  DateTime?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  business Business             @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  parent   Parent?              @relation(fields: [parentId], references: [id])
+  student  Student?             @relation(fields: [studentId], references: [id])
+  reviews  RegistrationReview[]
+
+  @@index([businessId, status])
+  @@index([email])
+  @@index([studentLastName, studentFirstName])
+}
+
+model RegistrationReview {
+  id             String       @id @default(cuid())
+  registrationId String
+  action         ReviewAction
+  note           String?
+  reviewerName   String
+  createdAt      DateTime     @default(now())
+
+  registration Registration @relation(fields: [registrationId], references: [id], onDelete: Cascade)
+
+  @@index([registrationId])
+}
