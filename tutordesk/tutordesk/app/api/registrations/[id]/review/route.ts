@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { ReviewAction, RegistrationStatus } from "@/lib/generated/prisma/enums";
 import { prisma } from "@/lib/prisma";
+import { requireUser } from "@/lib/require-user";
 
 const reviewSchema = z.object({
   action: z.enum(["APPROVE", "REQUEST_CHANGES", "REJECT"]),
@@ -13,12 +14,14 @@ const reviewSchema = z.object({
 
 export async function POST(request: Request, context: RouteContext<"/api/registrations/[id]/review">) {
   try {
+    const user = await requireUser();
+    if (!user) return Response.json({ error: "Authentication required." }, { status: 401 });
     const { id } = await context.params;
     const parsed = reviewSchema.safeParse(await request.json());
     if (!parsed.success) return Response.json({ error: parsed.error.issues[0]?.message ?? "Invalid review." }, { status: 400 });
 
     const registration = await prisma.registration.findFirst({
-      where: { id, business: { slug: "tutordesk-demo" } },
+      where: { id, businessId: user.businessId },
     });
     if (!registration) return Response.json({ error: "Registration not found." }, { status: 404 });
     if (registration.status === RegistrationStatus.APPROVED || registration.status === RegistrationStatus.REJECTED) {
@@ -58,7 +61,7 @@ export async function POST(request: Request, context: RouteContext<"/api/registr
             learningNeeds: registration.learningNeeds,
           },
         });
-        await transaction.registrationReview.create({ data: { registrationId: id, action: ReviewAction.APPROVED, reviewerName: "Sarah Manager" } });
+        await transaction.registrationReview.create({ data: { registrationId: id, action: ReviewAction.APPROVED, reviewerName: user.name ?? user.email ?? "TutorDesk user" } });
         return transaction.registration.update({
           where: { id },
           data: { status: RegistrationStatus.APPROVED, reviewedAt: new Date(), parentId: parent.id, studentId: student.id },
@@ -68,7 +71,7 @@ export async function POST(request: Request, context: RouteContext<"/api/registr
 
       const status = parsed.data.action === "REQUEST_CHANGES" ? RegistrationStatus.CHANGES_REQUESTED : RegistrationStatus.REJECTED;
       const action = parsed.data.action === "REQUEST_CHANGES" ? ReviewAction.REQUESTED_CHANGES : ReviewAction.REJECTED;
-      await transaction.registrationReview.create({ data: { registrationId: id, action, note: parsed.data.note, reviewerName: "Sarah Manager" } });
+      await transaction.registrationReview.create({ data: { registrationId: id, action, note: parsed.data.note, reviewerName: user.name ?? user.email ?? "TutorDesk user" } });
       return transaction.registration.update({
         where: { id },
         data: { status, reviewedAt: new Date() },

@@ -31,18 +31,72 @@ enum StudentStatus {
   WITHDRAWN
 }
 
+enum UserRole {
+  OWNER
+  ADMIN
+  TEACHER
+}
+
+enum Weekday {
+  MON
+  TUE
+  WED
+  THU
+  FRI
+  SAT
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+}
+
+enum BillingMethod {
+  MONTHLY
+  FULL_TERM
+}
+
+enum FeeStatus {
+  UNPAID
+  PAID
+}
+
 model Business {
   id          String   @id @default(cuid())
   name        String
   slug        String   @unique
   countryCode String
   currency    String
+  timeZone    String   @default("Australia/Sydney")
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  parents       Parent[]
-  students      Student[]
-  registrations Registration[]
+  parents           Parent[]
+  students          Student[]
+  registrations     Registration[]
+  users             User[]
+  batches           Batch[]
+  attendanceRecords AttendanceRecord[]
+  feePeriods        FeePeriod[]
+  studentFees       StudentFee[]
+}
+
+model User {
+  id           String   @id @default(cuid())
+  businessId   String
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         UserRole @default(TEACHER)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  business          Business           @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  attendanceRecords AttendanceRecord[]
+  markedFees        StudentFee[]
+
+  @@index([businessId])
 }
 
 model Parent {
@@ -80,13 +134,118 @@ model Student {
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
 
-  business     Business      @relation(fields: [businessId], references: [id], onDelete: Cascade)
-  parent       Parent        @relation(fields: [parentId], references: [id])
-  registration Registration?
+  business          Business           @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  parent            Parent             @relation(fields: [parentId], references: [id])
+  registration      Registration?
+  batchMemberships  BatchStudent[]
+  attendanceRecords AttendanceRecord[]
+  fees              StudentFee[]
 
   @@index([businessId])
   @@index([parentId])
   @@index([lastName, firstName])
+}
+
+model Batch {
+  id            String         @id @default(cuid())
+  businessId    String
+  name          String
+  startDate     DateTime       @db.Date
+  startTime     String
+  isRecurring   Boolean        @default(false)
+  recurringDays Weekday[]
+  endDate       DateTime?      @db.Date
+  feePerSession Decimal?       @db.Decimal(10, 2)
+  billingMethod BillingMethod?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  business          Business           @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  students          BatchStudent[]
+  attendanceRecords AttendanceRecord[]
+  feePeriods        FeePeriod[]
+
+  @@unique([businessId, name])
+  @@index([businessId])
+  @@index([businessId, startDate])
+}
+
+model BatchStudent {
+  batchId   String
+  studentId String
+  addedAt   DateTime  @default(now())
+  removedAt DateTime?
+
+  batch   Batch   @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@id([batchId, studentId])
+  @@index([studentId])
+}
+
+model FeePeriod {
+  id          String   @id @default(cuid())
+  businessId  String
+  batchId     String
+  label       String
+  periodStart DateTime @db.Date
+  periodEnd   DateTime @db.Date
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  business    Business     @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  batch       Batch        @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  studentFees StudentFee[]
+
+  @@unique([batchId, periodStart, periodEnd])
+  @@index([businessId, periodStart])
+}
+
+model StudentFee {
+  id           String    @id @default(cuid())
+  businessId   String
+  feePeriodId  String
+  studentId    String
+  sessionCount Int
+  rate         Decimal   @db.Decimal(10, 2)
+  amount       Decimal   @db.Decimal(10, 2)
+  dueDate      DateTime  @db.Date
+  status       FeeStatus @default(UNPAID)
+  paidAt       DateTime?
+  paymentNote  String?
+  markedById   String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  business  Business  @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  feePeriod FeePeriod @relation(fields: [feePeriodId], references: [id], onDelete: Cascade)
+  student   Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  markedBy  User?     @relation(fields: [markedById], references: [id])
+
+  @@unique([feePeriodId, studentId])
+  @@index([businessId, status, dueDate])
+  @@index([studentId])
+}
+
+model AttendanceRecord {
+  id          String           @id @default(cuid())
+  businessId  String
+  batchId     String
+  studentId   String
+  sessionDate DateTime         @db.Date
+  status      AttendanceStatus
+  markedById  String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  business Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  batch    Batch    @relation(fields: [batchId], references: [id], onDelete: Cascade)
+  student  Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  markedBy User     @relation(fields: [markedById], references: [id])
+
+  @@unique([batchId, studentId, sessionDate])
+  @@index([businessId, sessionDate])
+  @@index([studentId, sessionDate])
 }
 
 model Registration {

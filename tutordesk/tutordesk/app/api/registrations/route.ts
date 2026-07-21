@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { prisma } from "@/lib/prisma";
 import { RegistrationStatus } from "@/lib/generated/prisma/enums";
+import { requireUser } from "@/lib/require-user";
 
 const registrationSchema = z.object({
   studentFirstName: z.string().trim().min(1).max(80),
@@ -32,14 +33,8 @@ const validStatuses = new Set(Object.values(RegistrationStatus));
 
 export async function GET(request: Request) {
   try {
-    const business = await prisma.business.findUnique({
-      where: { slug: "tutordesk-demo" },
-      select: { id: true },
-    });
-
-    if (!business) {
-      return Response.json({ error: "TutorDesk has not been configured." }, { status: 503 });
-    }
+    const user = await requireUser();
+    if (!user) return Response.json({ error: "Authentication required." }, { status: 401 });
 
     const url = new URL(request.url);
     const query = url.searchParams.get("q")?.trim() ?? "";
@@ -49,7 +44,7 @@ export async function GET(request: Request) {
       : undefined;
 
     const where = {
-      businessId: business.id,
+      businessId: user.businessId,
       ...(status ? { status } : {}),
       ...(query ? {
         OR: [
@@ -81,10 +76,10 @@ export async function GET(request: Request) {
       }),
       prisma.registration.groupBy({
         by: ["status"],
-        where: { businessId: business.id },
+        where: { businessId: user.businessId },
         _count: { _all: true },
       }),
-      prisma.registration.count({ where: { businessId: business.id } }),
+      prisma.registration.count({ where: { businessId: user.businessId } }),
     ]);
 
     const counts = Object.fromEntries(groupedCounts.map((item) => [item.status, item._count._all]));
@@ -97,6 +92,8 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
+    const user = await requireUser();
+    if (!user) return Response.json({ error: "Authentication required." }, { status: 401 });
     const parsed = registrationSchema.safeParse(await request.json());
 
     if (!parsed.success) {
@@ -106,24 +103,12 @@ export async function POST(request: Request) {
       );
     }
 
-    const business = await prisma.business.findUnique({
-      where: { slug: "tutordesk-demo" },
-      select: { id: true },
-    });
-
-    if (!business) {
-      return Response.json(
-        { error: "TutorDesk has not been configured. Run npm run db:test first." },
-        { status: 503 },
-      );
-    }
-
     const data = parsed.data;
     const reference = `REG-${new Date().getFullYear()}-${randomUUID().slice(0, 6).toUpperCase()}`;
     const registration = await prisma.registration.create({
       data: {
         reference,
-        businessId: business.id,
+        businessId: user.businessId,
         studentFirstName: data.studentFirstName,
         studentLastName: data.studentLastName,
         dateOfBirth: new Date(`${data.dateOfBirth}T00:00:00.000Z`),

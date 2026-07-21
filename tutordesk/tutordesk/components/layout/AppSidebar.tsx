@@ -2,20 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BarChart3, CalendarCheck2, ClipboardCheck, HelpCircle, LayoutDashboard, Layers3, LogOut, ReceiptText, Settings, Users, X } from "lucide-react";
+import { CalendarCheck2, ClipboardCheck, LayoutDashboard, Layers3, LogOut, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { signOut } from "next-auth/react";
 
 const navigation = [
   { label: "Dashboard", icon: LayoutDashboard, href: "/" },
   { label: "Registrations", icon: ClipboardCheck, href: "/registrations" },
-  { label: "Students", icon: Users, href: "/students" },
   { label: "Batches", icon: Layers3, href: "/batches" },
   { label: "Attendance", icon: CalendarCheck2, href: "/attendance" },
-  { label: "Fees", icon: ReceiptText, href: "/fees" },
-  { label: "Reports", icon: BarChart3, href: "/reports" },
-  { label: "Settings", icon: Settings, href: "/settings" },
 ];
 
 export function AppSidebar({ className, onClose }: { className?: string; onClose?: () => void }) {
@@ -38,8 +35,7 @@ export function AppSidebar({ className, onClose }: { className?: string; onClose
         </ul>
       </nav>
       <div className="space-y-1 px-4 pb-6">
-        <button className="flex h-11 w-full items-center gap-3 rounded-lg px-4 text-[13px] hover:bg-white/70"><HelpCircle className="size-[18px]" />Help</button>
-        <button className="flex h-11 w-full items-center gap-3 rounded-lg px-4 text-[13px] hover:bg-white/70"><LogOut className="size-[18px]" />Logout</button>
+        <button className="flex h-11 w-full items-center gap-3 rounded-lg px-4 text-[13px] hover:bg-white/70" onClick={() => signOut({ callbackUrl: "/login" })}><LogOut className="size-[18px]" />Logout</button>
       </div>
     </aside>
   );
